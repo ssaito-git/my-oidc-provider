@@ -1,0 +1,15 @@
+comments:
+  UndocumentedPublicClass:
+    active: true
+  UndocumentedPublicFunction:
+    active: true
+  UndocumentedPublicProperty:
+    active: true
+
+formatting:
+  TrailingCommaOnCallSite:
+    active: true
+    autoCorrect: true
+  TrailingCommaOnDeclarationSite:
+    active: true
+    autoCorrect: true

@@ -1,0 +1,80 @@
+{
+  "issuerConfigs": [
+    {
+      "issuer": "http://localhost:8080",
+      "scopes": [
+        "read",
+        "write",
+        "offline_access",
+        "openid"
+      ],
+      "supportedResponseTypes": [
+        "code",
+        "id_token"
+      ],
+      "supportedGrantTypes": [
+        "client_credentials",
+        "authorization_code"
+      ],
+      "supportedCodeChallengeMethods": [
+        "S256"
+      ],
+      "requiredPKCE": false,
+      "authorizationRequestDataDuration": 600,
+      "authorizationCodeDuration": 300,
+      "accessTokenDuration": 300,
+      "refreshTokenDuration": 2592000,
+      "idTokenDuration": 300,
+      "clients": [
+        {
+          "id": "sample-rp",
+          "name": "sample rp client",
+          "secret": "secret",
+          "type": "confidential",
+          "scopes": [
+            "read",
+            "write",
+            "offline_access",
+            "openid"
+          ],
+          "supportedGrantTypes": [
+            "client_credentials",
+            "authorization_code"
+          ],
+          "redirectUris": [
+            "http://localhost:8081/callback"
+          ],
+          "authorizationRequestDataDuration": null,
+          "authorizationCodeDuration": null,
+          "accessTokenDuration": null,
+          "refreshTokenDuration": null,
+          "idTokenDuration": null
+        }
+      ],
+      "users": [
+        {
+          "username": "alice",
+          "subject": "c5b4cd44-0ebe-4d4d-b3b1-206efbf03554",
+          "password": "pass",
+          "standardClaimSet": {
+            "name": "alice",
+            "email": "alice@example.com"
+          },
+          "customClaims": {
+          }
+        },
+        {
+          "username": "bob",
+          "subject": "edb4d389-46cf-44f7-946e-6a9e93a2d37c",
+          "password": "pass",
+          "standardClaimSet": {
+            "name": "bob",
+            "email": "bob@example.com"
+          },
+          "customClaims": {
+          }
+        }
+      ]
+    }
+  ]
+}
