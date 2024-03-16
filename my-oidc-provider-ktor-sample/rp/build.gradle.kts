@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
-    kotlin("plugin.serialization") version "1.9.0"
-    id("io.ktor.plugin") version "2.3.8"
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktor)
     `myoidcprovider-detekt`
 }
 
@@ -11,23 +11,23 @@ repositories {
 
 dependencies {
     // ktor server
-    implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("io.ktor:ktor-server-content-negotiation")
-    implementation("io.ktor:ktor-serialization-kotlinx-json")
-    implementation("io.ktor:ktor-server-sessions-jvm")
-    implementation("io.ktor:ktor-server-freemarker")
-    implementation("io.ktor:ktor-server-freemarker-jvm")
-    implementation("io.ktor:ktor-server-auth")
-    implementation("ch.qos.logback:logback-classic:1.4.14")
+    implementation(libs.ktor.server.core.jvm)
+    implementation(libs.ktor.server.netty.jvm)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.server.sessions.jvm)
+    implementation(libs.ktor.server.freemarker)
+    implementation(libs.ktor.server.freemarker.jvm)
+    implementation(libs.ktor.server.auth)
+    implementation(libs.logback.classic)
 
     // ktor client
-    implementation("io.ktor:ktor-client-core")
-    implementation("io.ktor:ktor-client-cio")
-    implementation("io.ktor:ktor-client-content-negotiation")
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
 
     // JWT
-    implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
+    implementation(libs.nimbus.jose.jwt)
 }
 
 kotlin {

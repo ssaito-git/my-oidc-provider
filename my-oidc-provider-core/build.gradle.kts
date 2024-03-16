@@ -12,8 +12,8 @@ repositories {
 }
 
 dependencies {
-    api("com.nimbusds:nimbus-jose-jwt:9.34")
-    api("com.michael-bull.kotlin-result:kotlin-result:1.1.18")
+    api(libs.nimbus.jose.jwt)
+    api(libs.kotlin.result)
     testImplementation(kotlin("test"))
 }
 
