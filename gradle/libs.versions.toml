@@ -24,6 +24,9 @@ jackson-dataformat-cbor = { module = "com.fasterxml.jackson.dataformat:jackson-d
 # Nimbus JOSE + JWT
 nimbus-jose-jwt = { module = "com.nimbusds:nimbus-jose-jwt", version = "9.37.3" }
 
+# OpenID Connect
+oauth2-oidc-sdk = { module = "com.nimbusds:oauth2-oidc-sdk", version = "11.10.1" }
+
 # kotlin-result
 kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.20" }
 

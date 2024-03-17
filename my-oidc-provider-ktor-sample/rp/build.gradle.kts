@@ -27,7 +27,7 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
 
     // JWT
-    implementation(libs.nimbus.jose.jwt)
+    implementation(libs.oauth2.oidc.sdk)
 }
 
 kotlin {
