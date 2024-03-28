@@ -14,17 +14,13 @@ import com.webauthn4j.data.attestation.statement.PackedAttestationStatement
 import com.webauthn4j.data.attestation.statement.TPMAttestationStatement
 
 class AttestationStatementEnvelope @JsonCreator constructor(
-    @JsonProperty(
-        "attStmt",
-    ) attestationStatement: AttestationStatement,
-) {
-    @JsonProperty("attStmt")
-    @JsonTypeInfo(
+    @field:JsonProperty("attStmt")
+    @field:JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
         property = "fmt",
     )
-    @JsonSubTypes(
+    @field:JsonSubTypes(
         JsonSubTypes.Type(value = NoneAttestationStatement::class, name = NoneAttestationStatement.FORMAT),
         JsonSubTypes.Type(value = AndroidKeyAttestationStatement::class, name = AndroidKeyAttestationStatement.FORMAT),
         JsonSubTypes.Type(
@@ -39,11 +35,10 @@ class AttestationStatementEnvelope @JsonCreator constructor(
         JsonSubTypes.Type(value = TPMAttestationStatement::class, name = TPMAttestationStatement.FORMAT),
         JsonSubTypes.Type(value = PackedAttestationStatement::class, name = PackedAttestationStatement.FORMAT),
     )
-    val attestationStatement: AttestationStatement
-
-    init {
-        this.attestationStatement = attestationStatement
-    }
+    @JsonProperty(
+        "attStmt",
+    ) val attestationStatement: AttestationStatement,
+) {
 
     @get:JsonProperty("fmt")
     val format: String

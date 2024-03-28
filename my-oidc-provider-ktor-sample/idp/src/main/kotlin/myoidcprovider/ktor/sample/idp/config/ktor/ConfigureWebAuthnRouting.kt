@@ -32,14 +32,15 @@ import io.ktor.server.sessions.get
 import io.ktor.server.sessions.sessions
 import io.ktor.server.sessions.set
 import myoidcprovider.ktor.plugin.OidcProvider
-import myoidcprovider.ktor.sample.idp.session.SignInSession
 import myoidcprovider.ktor.sample.idp.User
+import myoidcprovider.ktor.sample.idp.repository.WebAuthnCredentialRepository
+import myoidcprovider.ktor.sample.idp.session.SignInSession
 import myoidcprovider.ktor.sample.idp.session.WebAuthnSignInSession
 import myoidcprovider.ktor.sample.idp.session.WebAuthnSignUpSession
 import myoidcprovider.ktor.sample.idp.users
-import myoidcprovider.ktor.sample.idp.webAuthnCredentials
 import myoidcprovider.ktor.sample.idp.webauthn.AttestationStatementEnvelope
 import myoidcprovider.ktor.sample.idp.webauthn.WebAuthnCredential
+import org.koin.ktor.ext.inject
 import java.nio.ByteBuffer
 import java.util.Base64
 import java.util.UUID
@@ -48,6 +49,8 @@ import java.util.UUID
  * WebAuthn ルーティングの設定
  */
 fun Application.configureWebAuthnRouting() {
+    val webAuthnCredentialRepository by inject<WebAuthnCredentialRepository>()
+
     routing {
         get("/webauthn/signInRequest") {
             val challenge = Base64.getEncoder().encodeToString(DefaultChallenge().value)
@@ -91,15 +94,7 @@ fun Application.configureWebAuthnRouting() {
                 UUID(it.getLong(), it.getLong())
             }
 
-            val (index, webAuthnCredential) = webAuthnCredentials.indexOfFirst {
-                it.handle == handle && it.credentialId.contentEquals(credentialId)
-            }.let {
-                if (it == -1) {
-                    Pair(it, null)
-                } else {
-                    Pair(it, webAuthnCredentials[it])
-                }
-            }
+            val webAuthnCredential = webAuthnCredentialRepository.findByHandleAndCredentialId(handle, credentialId)
 
             if (webAuthnCredential == null) {
                 call.respond(HttpStatusCode.BadRequest)
@@ -169,8 +164,8 @@ fun Application.configureWebAuthnRouting() {
                 return@post
             }
 
-            webAuthnCredentials[index] = webAuthnCredential.copy(
-                signCount = authenticationData.authenticatorData?.signCount ?: 0,
+            webAuthnCredentialRepository.save(
+                webAuthnCredential.updateCounter(authenticationData.authenticatorData?.signCount ?: 0),
             )
 
             call.sessions.clear<WebAuthnSignInSession>()
@@ -306,7 +301,8 @@ fun Application.configureWebAuthnRouting() {
                 signCount,
                 serializedTransports,
             )
-            webAuthnCredentials.add(webAuthnCredential)
+
+            webAuthnCredentialRepository.save(webAuthnCredential)
 
             call.sessions.clear<WebAuthnSignUpSession>()
             call.sessions.set(SignInSession(user.subject))

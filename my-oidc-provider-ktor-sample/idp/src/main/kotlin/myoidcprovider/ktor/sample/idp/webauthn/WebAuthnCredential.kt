@@ -1,6 +1,6 @@
 package myoidcprovider.ktor.sample.idp.webauthn
 
-import java.util.*
+import java.util.UUID
 
 data class WebAuthnCredential(
     val userId: String,
@@ -11,6 +11,10 @@ data class WebAuthnCredential(
     val signCount: Long,
     val transports: String,
 ) {
+    fun updateCounter(count: Long): WebAuthnCredential {
+        return this.copy(signCount = count)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

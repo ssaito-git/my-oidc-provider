@@ -5,12 +5,11 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import myoidcprovider.ktor.sample.idp.config.ktor.configureAuthentication
 import myoidcprovider.ktor.sample.idp.config.ktor.configureFreeMarker
+import myoidcprovider.ktor.sample.idp.config.ktor.configureKoin
 import myoidcprovider.ktor.sample.idp.config.ktor.configureOidcProvider
 import myoidcprovider.ktor.sample.idp.config.ktor.configureRouting
 import myoidcprovider.ktor.sample.idp.config.ktor.configureSerialization
 import myoidcprovider.ktor.sample.idp.config.ktor.configureWebAuthnRouting
-import myoidcprovider.ktor.sample.idp.webauthn.WebAuthnCredential
-import java.util.*
 
 /**
  * メイン関数
@@ -18,6 +17,7 @@ import java.util.*
 fun main(args: Array<String>) {
     val env = commandLineEnvironment(args) {
         module {
+            configureKoin()
             configureFreeMarker()
             configureSerialization()
             configureOidcProvider()
@@ -45,8 +45,3 @@ data class User(val subject: String, val name: String, val password: String?)
  * ユーザーリスト
  */
 val users = mutableMapOf<String, MutableList<User>>()
-
-/**
- * WebAuthn のクレデンシャルリスト
- */
-val webAuthnCredentials = mutableListOf<WebAuthnCredential>()
