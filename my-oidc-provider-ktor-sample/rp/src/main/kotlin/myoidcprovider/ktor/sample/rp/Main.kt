@@ -20,8 +20,6 @@ fun main(args: Array<String>) {
             configureOpenIdConnect()
             configureRouting()
         }
-        watchPaths = listOf("classes")
-        developmentMode = true
     }
 
     embeddedServer(Netty, environment = env).apply {

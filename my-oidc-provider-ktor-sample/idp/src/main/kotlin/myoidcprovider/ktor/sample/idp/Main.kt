@@ -25,8 +25,6 @@ fun main(args: Array<String>) {
             configureRouting()
             configureWebAuthnRouting()
         }
-        watchPaths = listOf("classes")
-        developmentMode = true
     }
 
     embeddedServer(Netty, environment = env).start(wait = true)
