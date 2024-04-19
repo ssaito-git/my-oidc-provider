@@ -1,7 +1,6 @@
 plugins {
     kotlin("jvm")
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ktor)
     `java-library`
     `maven-publish`
     `myoidcprovider-detekt`
@@ -13,6 +12,9 @@ repositories {
 
 dependencies {
     api(project(":my-oidc-provider-core"))
+
+    // Ktor
+    implementation(platform(libs.ktor.bom))
     implementation(libs.ktor.server.core.jvm)
     implementation(libs.ktor.serialization.kotlinx.json)
 }
